@@ -1,0 +1,103 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.hidetake.ssh' version '2.11.2'
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.11.0'
+}
+
+sourceCompatibility = '21'
+targetCompatibility = '21'
+
+def junitVersion = '5.11.0'
+def slf4jVersion = '2.0.9'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ['--enable-preview']
+}
+
+tasks.withType(Test).configureEach {
+    jvmArgs += '--enable-preview'
+}
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += '--enable-preview'
+}
+
+dependencies {
+    // Servlet & JSP API
+    providedCompile 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+    providedCompile 'jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.1'
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+
+    // Database & Connection Pooling
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'com.zaxxer:HikariCP:6.2.1'
+    implementation 'org.jdbi:jdbi3-core:3.47.0'
+
+    // JSON & Utility
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+    implementation 'com.google.api-client:google-api-client:2.7.2'
+    implementation 'com.google.code.gson:gson:2.12.1'
+    implementation 'org.mindrot:jbcrypt:0.4'
+    implementation 'jakarta.mail:jakarta.mail-api:2.1.3'
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+
+    // Logging
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+
+    // JWT
+    implementation 'com.auth0:java-jwt:4.5.0'
+
+    // Testing
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+remotes {
+    host {
+        host = '192.168.217.129'  // Địa chỉ IP máy ảo hoặc VPS
+        user = 'root'          // Tài khoản đăng nhập
+        password = '123'  // Mật khẩu
+    }
+}
+
+ssh.settings {
+    knownHosts = allowAnyHosts
+}
+
+tasks.register('upload_all_to_server') {
+    doLast {
+        ssh.run {
+            session(remotes.host) {
+                execute "mkdir -p /root/${project.name}"
+
+                put from: "${projectDir}/src", into: "/root/${project.name}"
+                put from: "${projectDir}/compose.yaml", into: "/root/${project.name}"
+                put from: "${projectDir}/Dockerfile", into: "/root/${project.name}"
+                put from: "${projectDir}/build.gradle", into: "/root/${project.name}"
+            }
+        }
+    }
+}

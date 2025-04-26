@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/font/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-stretch: 75% 100%;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/font/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+:root {
+    --bs-primary: #fd0;
+    --bs-secondary: #a93232;
+    --text-color: #333;
+    --hover-color: #000;
+    --text-white: #fff;
+    --mobile-header-height: 120px;
+    --mobile-bottom-nav-height: 60px;
+    --border-radius: 15px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    --card-border-radius: 15px;
+    --card-padding: 1rem;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --card-hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    --price-color: #a93232;
+    --meta-color: #666;
+    --card-bg: #ffffff;
+    --card-radius: 16px;
+    --card-border: 1px solid rgba(0, 0, 0, 0.08);
+    --card-hover-transform: translateY(-6px);
+    --price-original: #999;
+    --price-sale: #ee4d2d;
+    --price-regular: #ee4d2d;
+    --badge-bg: #ee4d2d;
+    --badge-color: #fff;
+    --rating-star: #ffc107;
+    --rating-count: #666;
+    --stock-in: #00c853;
+    --stock-out: #ff1744;
+    --tag-bg: rgba(0, 0, 0, 0.04);
+    --tag-color: #666;
+
+    /* Login specific variables */
+    --success-color: #00c853;
+    --error-color: #ff1744;
+    --border-color: #e0e0e0;
+    --hover-bg: #f5f5f5;
+    --input-focus-shadow: 0 0 0 2px rgba(255, 221, 0, 0.2);
+
+    /* Product Detail specific variables */
+    --product-title-size: 2rem;
+    --product-title-weight: 700;
+
+    /* Gallery */
+    --gallery-height: 500px;
+    --thumbnail-size: 80px;
+    --zoom-scale: 1.5;
+
+    /* Spacing */
+    --section-spacing: 2rem;
+    --element-spacing: 1rem;
+
+    /* Animation */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Lightbox */
+    --lightbox-bg: rgba(0, 0, 0, 0.9);
+    --lightbox-z-index: 1000;
+
+    /* Sticky header */
+    --sticky-header-height: 70px;
+    --sticky-header-bg: rgba(255, 255, 255, 0.95);
+
+    /* Mobile specific */
+    --mobile-cta-height: 60px;
+    --mobile-gallery-height: 350px;
+
+    /* Product Detail Colors */
+    --product-title-color: #2d3436;
+    --product-price-color: #ee4d2d;
+    --product-original-price: #999;
+    --product-sale-badge: #ee4d2d;
+    --product-stock-in: #00b894;
+    --product-stock-out: #d63031;
+    --product-rating-star: #fdcb6e;
+
+    /* Product Detail Sizes */
+    --product-gallery-height: 480px;
+    --product-thumb-size: 80px;
+    --product-title-size: 24px;
+    --product-price-size: 28px;
+
+    /* Product Detail Animations */
+    --product-hover-transition: all 0.3s ease;
+    --product-fade-timing: 0.5s;
+    --product-slide-timing: 0.3s;
+
+    /* Product Detail Shadows */
+    --product-card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --product-hover-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+    /* Login page specific variables */
+    --page-bg: #f5f7fa;
+    --input-bg: #ffffff;
+    --success-bg: rgba(0, 200, 83, 0.1);
+    --button-text: #000000;
+    --button-shadow: 0 4px 12px rgba(255, 221, 0, 0.3);
+    --input-focus-shadow: 0 0 0 3px rgba(255, 221, 0, 0.2);
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.bg-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+.btn-primary {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+}
+
+.bg-secondary {
+    background-color: #e6e7e8 !important;
+}
