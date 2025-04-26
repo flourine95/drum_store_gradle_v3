@@ -11,6 +11,13 @@ repositories {
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+
 ext {
     junitVersion = '5.11.0'
 }
