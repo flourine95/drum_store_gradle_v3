@@ -105,6 +105,7 @@ tasks.register('uploadDeployFiles') {
 
                 put from: "${projectDir}/Dockerfile", into: "/root/${project.name}/"
                 put from: "${projectDir}/compose.yaml", into: "/root/${project.name}/"
+                put from: "${projectDir}/install-docker.sh", into: "/root/${project.name}/"
 
                 put from: "${buildDir}/libs/${project.name}.war", into: "/root/${project.name}/"
 
@@ -118,6 +119,8 @@ tasks.register('remoteDeploy') {
     doLast {
         ssh.run {
             session(remotes.host) {
+                execute "cd /root/${project.name} && chmod +x install-docker.sh"
+                execute "cd /root/${project.name} && ./install-docker.sh"
                 execute "cd /root/${project.name} && docker compose down -v || true"
                 execute "cd /root/${project.name} && docker compose up -d --build"
             }
