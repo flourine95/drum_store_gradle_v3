@@ -14,7 +14,9 @@ repositories {
 ext {
     junitVersion = '5.11.0'
 }
-
+war {
+    archiveVersion.set('')
+}
 sourceCompatibility = '21'
 targetCompatibility = '21'
 
@@ -87,17 +89,43 @@ ssh.settings {
     knownHosts = allowAnyHosts
 }
 
-tasks.register('upload_all_to_server') {
+tasks.register('uploadDeployFiles') {
+    dependsOn war
     doLast {
         ssh.run {
             session(remotes.host) {
                 execute "mkdir -p /root/${project.name}"
 
-                put from: "${projectDir}/src", into: "/root/${project.name}"
-                put from: "${projectDir}/compose.yaml", into: "/root/${project.name}"
-                put from: "${projectDir}/Dockerfile", into: "/root/${project.name}"
-                put from: "${projectDir}/build.gradle", into: "/root/${project.name}"
+                put from: "${projectDir}/Dockerfile", into: "/root/${project.name}/"
+                put from: "${projectDir}/compose.yaml", into: "/root/${project.name}/"
+
+                put from: "${buildDir}/libs/${project.name}.war", into: "/root/${project.name}/"
+
+                put from: "${projectDir}/src/main/resources/sql", into: "/root/${project.name}/"
             }
         }
+    }
+}
+
+tasks.register('remoteDeploy') {
+    doLast {
+        ssh.run {
+            session(remotes.host) {
+                execute "cd /root/${project.name} && docker compose down -v || true"
+                execute "cd /root/${project.name} && docker compose up -d --build"
+            }
+        }
+    }
+}
+
+tasks.named('remoteDeploy') {
+    mustRunAfter 'uploadDeployFiles'
+}
+
+tasks.register('deployToServer') {
+    dependsOn 'uploadDeployFiles'
+    dependsOn 'remoteDeploy'
+    doLast {
+        println "\u001B[32mDEPLOY DONE!\u001B[0m"
     }
 }

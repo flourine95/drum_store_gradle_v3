@@ -1,3 +1,4 @@
+USE drum_store;
 INSERT INTO categories (id, name, image, description, createdAt)
 VALUES
     (1, 'Drums', 'product_detail_4.jpg', 'Sit quiquia ipsum numquam ut adipisci velit amet. Velit quiquia consectetur porro dolor non. Labore magnam voluptatem adipisci. Etincidunt adipisci ut modi voluptatem aliquam voluptatem est. Non ipsum quaerat dolorem. Neque magnam sed tempora numquam consectetur.', '2024-11-14 22:52:41'),

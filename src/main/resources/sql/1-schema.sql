@@ -1,3 +1,4 @@
+USE drum_store;
 CREATE TABLE categories
 (
     id          INT AUTO_INCREMENT PRIMARY KEY,
