@@ -312,13 +312,6 @@
     </div>
 </div>
 
-<%-- Kiểm tra nếu `notVerify` là `true` thì hiển thị modal --%>
-<script>
-    <% if (request.getAttribute("not-verify") != null) { %>
-    var myModal = new bootstrap.Modal(document.getElementById('verifyModal'));
-    myModal.show();
-    <% } %>
-</script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

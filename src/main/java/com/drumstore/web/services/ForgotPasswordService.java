@@ -18,6 +18,7 @@ public class ForgotPasswordService {
 
     public boolean requestPasswordReset(String email) {
         UserDTO user = userRepository.findUser("email", email);
+
         if (user == null) {
             return false;
         }

@@ -1,4 +1,5 @@
 package com.drumstore.web.services;
+import com.drumstore.web.utils.ConfigUtils;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -7,8 +8,8 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class MailService {
-    static final String from = "flourinee@gmail.com"; // thay đổi
-    static final String password = "jalaxigukuvlqsct"; // thay đổi
+    static final String from = ConfigUtils.get("email.sender"); // thay đổi
+    static final String password = ConfigUtils.get("email.password"); // thay đổi
 
     // gửi email
     public boolean sendEmail(String to, String subject, String content) {

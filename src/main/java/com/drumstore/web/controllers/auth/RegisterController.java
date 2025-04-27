@@ -74,26 +74,9 @@ public class RegisterController extends HttpServlet {
             registerRequest.setPassword(hashedPassword);
             User user = registerRequest.toModel();
 
-            // Tạo token và thời gian hết hạn, lưu vào session
-            String token =mailService.generateVerificationCode();
-            LocalDateTime expiration = LocalDateTime.now().plusMinutes(5);
-            Map<String, Object> verificationData = new HashMap<>();
-            verificationData.put("token", token);
-            verificationData.put("expiration", expiration);
-//            verificationData.put("user", user);
-
             if (userService.register(user)) {
-
-                // Gửi email xác thực
-                mailService.sendVerificationEmail(email,token);
-
-                // Lưu thông tin xác thực vào session
-                request.getSession().setAttribute("verificationData", verificationData);
-                request.getSession().setAttribute("emailToVerify", email);
-                response.sendRedirect(request.getContextPath() + "/verify-token");
-
-//                request.getSession().setAttribute("successMessage", "Đăng ký thành công! Bạn có thể đăng nhập ngay.");
-//                response.sendRedirect(request.getContextPath() + "/login");
+                request.getSession().setAttribute("successMessage", "Đăng ký thành công! Bạn có thể đăng nhập ngay.");
+                response.sendRedirect(request.getContextPath() + "/login");
             } else {
                 errors.put("general", "Có lỗi xảy ra khi đăng ký. Vui lòng thử lại sau.");
                 request.setAttribute("errors", errors);
@@ -104,7 +87,8 @@ public class RegisterController extends HttpServlet {
             }
 
         } catch (Exception e) {
-            errors.put("general", "Có lỗi xảy ra. Vui lòng thử lại sau.");
+            System.out.println(e.getMessage());
+            errors.put("general", e.getMessage());
             request.setAttribute("errors", errors);
             request.setAttribute("title", "Đăng ký");
             request.setAttribute("content", "register.jsp");
